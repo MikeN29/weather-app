@@ -10,8 +10,8 @@
 
 
 let userLocation = '';
-let latVar = ''; //might need to be declared or converted to a number??
-let lonVar = ''; //might need to be declared or converted to a number??
+let latVar = ''; 
+let lonVar = ''; 
 
 
 function submitData() {
@@ -89,27 +89,11 @@ function createWeatherCard(userLocation, currentTemp, currentWeatherCondition, c
         ul.appendChild(li);
         li.innerHTML=li.innerHTML + array[i];
     }
-
-
-
-    
-
-
-
-
-
-    //user template letrals
-    //create image
-    //li - userlocation
-    //li - weather status - rain/sun etc (currentWeatherCondition)
-    //li - current temp: currentTemp
-    //li - high of currentTempHigh
-    //li - low of currentTempLow
-
-
 }
 
-
+function threeDayForecast() {
+  
+}
 
 
 
