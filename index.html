@@ -4,16 +4,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="scripts.js"></script> 
+    <script src="scripts.js" defer></script> 
     <link rel="stylesheet" href="styles.css">
     <title>Weather App</title>
 </head>
 <body>
-    <div>
+    <div id="titlePane">
         <h1>Weather App</h1>
-        <label for="location-search">Enter Location:</label>
-        <input type="search" id="location-search" name="q">
-        <button onclick="submitData()" id="submit">Search</button>
+        <label for="location-search"></label>
+        <div>
+            <input type="search" id="location-search" name="q" placeholder="Enter Location...">
+            <button onclick="submitData()" id="submit">Search</button>
+        </div>
+        
     </div>
+    <div id="weatherCardContainer"></div>
 </body>
 </html>

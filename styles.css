@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#titlePane {
+    background-color: aqua;
+    width: 100%;
+    height: 300px;
+    text-align: center;
+
+}
+
+#titlePane > h1 {
+    font-size: 40px;
+    padding-top: 70px;
+    padding-bottom: 30px;
+    margin: 0;
+}
+
+
+#location-search {
+    width: 250px;
+    text-align: center;
+}
+
+#weatherCardContainer {
+    background-color: brown;
+    width: 650px;
+    height: 400px;
+    margin: auto;   
+    display: flex;
+
+}
+
+#weatherCardDiv {
+    
+}
+
+img {
+    width: 200px;
+    height: 200px;
+}

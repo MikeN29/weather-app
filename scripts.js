@@ -15,7 +15,7 @@ let lonVar = ''; //might need to be declared or converted to a number??
 
 
 function submitData() {
-    let userLocation = document.getElementById('location-search').value
+    let userLocation = document.getElementById('location-search').value // make capital first letters!
     console.log(userLocation)
 
     locationAPI(userLocation)
@@ -40,12 +40,21 @@ function locationAPI(userLocation) {
         .then(response => response.json()  )
         .then(content => {
           console.log("current temp: " + content.main.temp);
+            let currentTemp = content.main.temp;
+            //console.log(currentTemp);
+
           console.log("current weather condition: " + content.weather[0].main);
+            let currentWeatherCondition = content.weather[0].main;
 
           console.log("current temp high: " + content.main.temp_max);
+            let currentTempHigh = content.main.temp_max;
+
           console.log("current temp low: " + content.main.temp_min);
+            let currentTempLow = content.main.temp_min;
 
           console.log(content.main)
+
+          createWeatherCard(userLocation, currentTemp, currentWeatherCondition, currentTempHigh, currentTempLow)
     
       })
       .catch(err =>{
@@ -59,7 +68,59 @@ function locationAPI(userLocation) {
         console.error(err)
     })
 
+    
+    //createWeatherCard(userLocation, currentTemp, currentWeatherCondition, currentTempHigh, currentTempLow) - unsure scope of this function call
 }
+
+
+function createWeatherCard(userLocation, currentTemp, currentWeatherCondition, currentTempHigh, currentTempLow) {
+    const weatherIMG = document.createElement('img');
+    const ul = document.createElement('ul');
+
+    document.getElementById("weatherCardContainer").appendChild(weatherIMG);
+    document.getElementById("weatherCardContainer").appendChild(ul);
+
+    weatherIMG.src = `./images/${currentWeatherCondition}.png`;
+
+    array = [`${userLocation}`, `${currentWeatherCondition}`, `Current Temp: ${currentTemp}&#176;C`, `Daily high: ${currentTempHigh}&#176;C`, `Daily Low: ${currentTempLow}&#176;C`]
+
+    for (var i=0; i<array.length; i++){
+        var li=document.createElement('li');
+        ul.appendChild(li);
+        li.innerHTML=li.innerHTML + array[i];
+    }
+
+
+
+    
+
+
+
+
+
+    //user template letrals
+    //create image
+    //li - userlocation
+    //li - weather status - rain/sun etc (currentWeatherCondition)
+    //li - current temp: currentTemp
+    //li - high of currentTempHigh
+    //li - low of currentTempLow
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
