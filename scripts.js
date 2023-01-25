@@ -82,6 +82,11 @@ function createWeatherCard(userLocation, currentTemp, currentWeatherCondition, c
 
     weatherIMG.src = `./images/${currentWeatherCondition}.png`;
 
+    let element = document.getElementById("weatherCardContainer");
+    element.classList.add("weatherCardContainer");
+
+
+
     array = [`${userLocation}`, `${currentWeatherCondition}`, `Current Temp: ${currentTemp}&#176;C`, `Daily high: ${currentTempHigh}&#176;C`, `Daily Low: ${currentTempLow}&#176;C`]
 
     for (var i=0; i<array.length; i++){
