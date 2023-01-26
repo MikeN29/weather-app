@@ -25,7 +25,7 @@ function submitData() {
 }
 
 function locationAPI(userLocation) {
-    let locationAPI = `http://api.openweathermap.org/geo/1.0/direct?q=${userLocation}&appid=e9abf275dd62a4be25c1a660d12a04fd`
+    let locationAPI = `https://api.openweathermap.org/geo/1.0/direct?q=${userLocation}&appid=e9abf275dd62a4be25c1a660d12a04fd`
     //console.log(locationAPI)
     event.preventDefault()
 
