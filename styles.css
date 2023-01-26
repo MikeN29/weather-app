@@ -2,6 +2,7 @@ body {
     margin: 0;
     padding: 0;
     background-image: url('./images/background.png');
+    font-family: 'Heebo', sans-serif;
 }
 
 #titlePane {
