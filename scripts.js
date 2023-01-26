@@ -7,7 +7,7 @@
 
 // https://api.openweathermap.org/data/2.5/weather?lat=51.45&lon=-2.59&appid=e9abf275dd62a4be25c1a660d12a04fd&units=metric
 
-// api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid=e9abf275dd62a4be25c1a660d12a04fd&units=metric
+// api.openweathermap.org/data/2.5/forecast?lat=51.45&lon=2.59&appid=e9abf275dd62a4be25c1a660d12a04fd&units=metric
 
 
 
@@ -32,9 +32,18 @@ function locationAPI(userLocation) {
     fetch(locationAPI)
       .then(response => response.json()  )
       .then(content => {
-        //console.log(content[0].lon);
         let latVar = content[0].lat;
         let lonVar = content[0].lon;
+        weatherAPI(userLocation, latVar, lonVar)
+
+    })
+    .catch(err =>{
+        console.error(err)
+    })
+
+}
+
+function weatherAPI(userLocation, latVar, lonVar) {
 
         let weatherAPI = `https://api.openweathermap.org/data/2.5/weather?lat=${latVar}&lon=${lonVar}&appid=e9abf275dd62a4be25c1a660d12a04fd&units=metric`
 
@@ -48,21 +57,13 @@ function locationAPI(userLocation) {
             let currentTempLow = content.main.temp_min;
 
           createWeatherCard(userLocation, currentTemp, currentWeatherCondition, currentTempHigh, currentTempLow)
+          threeDayForecast(userLocation, latVar, lonVar)
     
       })
       .catch(err =>{
           console.error(err)
       })
 
-
-
-    })
-    .catch(err =>{
-        console.error(err)
-    })
-
-    
-    //createWeatherCard(userLocation, currentTemp, currentWeatherCondition, currentTempHigh, currentTempLow) - unsure scope of this function call
 }
 
 
@@ -79,7 +80,6 @@ function createWeatherCard(userLocation, currentTemp, currentWeatherCondition, c
     element.classList.add("weatherCardContainer");
 
 
-
     array = [`${userLocation}`, `${currentWeatherCondition}`, `Current Temp: ${currentTemp}&#176;C`, `Daily high: ${currentTempHigh}&#176;C`, `Daily Low: ${currentTempLow}&#176;C`]
 
     for (var i=0; i<array.length; i++){
@@ -89,9 +89,118 @@ function createWeatherCard(userLocation, currentTemp, currentWeatherCondition, c
     }
 }
 
-function threeDayForecast() {
-  
+function threeDayForecast(userLocation, latVar, lonVar) {
+
+  let threeDayForecastAPI = `https://api.openweathermap.org/data/2.5/forecast?lat=${latVar}&lon=${lonVar}&appid=e9abf275dd62a4be25c1a660d12a04fd&units=metric`;
+
+
+  console.log(threeDayForecastAPI)
+
+  fetch(threeDayForecastAPI)
+  .then(response => response.json()  )
+  .then(content => {
+
+      let tomorrowTemp = content.list[7].main.temp;
+      let tomorrowWeatherCondition = content.list[7].weather[0].main;
+      let tomorrowTempHigh = content.list[7].main.temp_max;
+      let tomorrowTempLow = content.list[7].main.temp_min;
+
+      let dayThreeTemp = content.list[15].main.temp;
+      let dayThreeWeatherCondition = content.list[15].weather[0].main;
+      let dayThreeTempHigh = content.list[15].main.temp_max;
+      let dayThreeTempLow = content.list[15].main.temp_min;
+
+      let dayFourTemp = content.list[23].main.temp;
+      let dayFourWeatherCondition = content.list[23].weather[0].main;
+      let dayFourTempHigh = content.list[23].main.temp_max;
+      let dayFourTempLow = content.list[23].main.temp_min;
+
+      threeDayCard(tomorrowTemp, tomorrowWeatherCondition, tomorrowTempHigh, tomorrowTempLow, 
+        dayThreeTemp, dayThreeWeatherCondition, dayThreeTempHigh, dayThreeTempLow, 
+        dayFourTemp, dayFourWeatherCondition, dayFourTempHigh, dayFourTempLow)
+
+})
+.catch(err =>{
+    console.error(err)
+})
+ 
+
 }
+
+function threeDayCard(tomorrowTemp, tomorrowWeatherCondition, tomorrowTempHigh, tomorrowTempLow, 
+                      dayThreeTemp, dayThreeWeatherCondition, dayThreeTempHigh, dayThreeTempLow, 
+                      dayFourTemp, dayFourWeatherCondition, dayFourTempHigh, dayFourTempLow) {
+
+  const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday", "Sunday", "Monday"];
+  const d = new Date();
+  let tomorrow = weekday[d.getDay()+1];
+  let dayThree = weekday[d.getDay()+2];
+  let dayFour = weekday[d.getDay()+3];
+  console.log(dayFour)
+
+  const elementsList = document.querySelectorAll("#tomorrowCard, #dayThreeCard, #dayFourCard");
+  const elementsArray = [...elementsList];
+
+  elementsArray.forEach(element => {
+    element.classList.add("dayThreeCards");
+  });
+
+  //tomorrow
+
+    const tomorrowIMG = document.createElement('img');
+    const tomorrowUL = document.createElement('ul');
+
+    document.getElementById("tomorrowCard").appendChild(tomorrowIMG);
+    document.getElementById("tomorrowCard").appendChild(tomorrowUL);
+
+    tomorrowIMG.src = `./images/${tomorrowWeatherCondition}.png`;
+
+    tomorrowArray = [`${tomorrow}`, `${tomorrowWeatherCondition}`, `Forecast Temp: ${tomorrowTemp}&#176;C`, `High: ${tomorrowTempHigh}&#176;C`, `Low: ${tomorrowTempLow}&#176;C`]
+
+    for (var i=0; i<tomorrowArray.length; i++){
+        var li=document.createElement('li');
+        tomorrowUL.appendChild(li);
+        li.innerHTML=li.innerHTML + tomorrowArray[i];
+    }
+
+    //dayThree
+
+    const dayThreeIMG = document.createElement('img');
+    const dayThreeUL = document.createElement('ul');
+
+    document.getElementById("dayThreeCard").appendChild(dayThreeIMG);
+    document.getElementById("dayThreeCard").appendChild(dayThreeUL);
+
+    dayThreeIMG.src = `./images/${dayThreeWeatherCondition}.png`;
+
+    dayThreeArray = [`${dayThree}`, `${dayThreeWeatherCondition}`, `Forecast Temp: ${dayThreeTemp}&#176;C`, `High: ${dayThreeTempHigh}&#176;C`, `Low: ${dayThreeTempLow}&#176;C`]
+
+    for (var i=0; i<dayThreeArray.length; i++){
+        var li=document.createElement('li');
+        dayThreeUL.appendChild(li);
+        li.innerHTML=li.innerHTML + dayThreeArray[i];
+    }
+
+    //dayFour
+
+    const dayFourIMG = document.createElement('img');
+    const dayFourUL = document.createElement('ul');
+
+    document.getElementById("dayFourCard").appendChild(dayFourIMG);
+    document.getElementById("dayFourCard").appendChild(dayFourUL);
+
+    dayFourIMG.src = `./images/${dayFourWeatherCondition}.png`;
+
+    dayFourArray = [`${dayFour}`, `${dayFourWeatherCondition}`, `Forecast Temp: ${dayFourTemp}&#176;C`, `High: ${dayFourTempHigh}&#176;C`, `Low: ${dayFourTempLow}&#176;C`]
+
+    for (var i=0; i<dayFourArray.length; i++){
+        var li=document.createElement('li');
+        dayFourUL.appendChild(li);
+        li.innerHTML=li.innerHTML + dayFourArray[i];
+    }
+
+}
+
 
 
 
@@ -112,25 +221,6 @@ function threeDayForecast() {
 
 
 
-/*function locationAPI(userLocation) {
-    let locationAPI = `http://api.openweathermap.org/geo/1.0/direct?q=${userLocation}&appid=e9abf275dd62a4be25c1a660d12a04fd`
-    console.log(locationAPI)
-    event.preventDefault()
-
-    fetch(locationAPI)
-      .then(response => response.json()  )
-      .then(content => {
-        //console.log(content[0].lon);
-        let latVar = content[0].lat;
-        let lonVar = content[0].lon;
-
-        console.log(latVar)
-        console.log(lonVar)
-    })
-    .catch(err =>{
-        console.error(err)
-    })
-} */
 
     
 
