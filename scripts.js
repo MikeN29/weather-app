@@ -21,7 +21,37 @@ function submitData() {
     console.log(userLocation)
 
     locationAPI(userLocation)
+    document.getElementById("submit").disabled = true;
 
+}
+
+function resetData() {
+
+    document.getElementById("submit").disabled = false;
+
+    //remove classes
+    let element = document.getElementById("weatherCardContainer");
+    element.classList.remove("weatherCardContainer");
+
+    const elementsList = document.querySelectorAll("#tomorrowCard, #dayThreeCard, #dayFourCard");
+    const elementsArray = [...elementsList];
+  
+    elementsArray.forEach(element => {
+      element.classList.remove("dayThreeCards");
+    });
+
+    //remove children
+
+    const myNode = document.getElementById("weatherCardContainer");
+    while (myNode.firstChild) {
+      myNode.removeChild(myNode.lastChild);
+    }
+
+    elementsArray.forEach(element => {
+        while (element.firstChild) {
+            element.removeChild(element.lastChild);
+          }
+      });
 }
 
 function locationAPI(userLocation) {
