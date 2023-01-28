@@ -67,3 +67,41 @@ li {
     flex-direction: row;
     justify-content: space-around;
 }
+
+
+@media only screen and (max-width: 320px) {
+    #titlePane {
+      height:  250px;
+    }
+
+    .weatherCardContainer {
+        height: 100px;
+        width: 100%;
+    }
+
+    img {
+        height: 100px;
+        width: 100px;
+    }
+
+    li {
+        font-size: 14px;
+        line-height: 16px;
+    }
+
+    #threeDayForecast {
+        flex-direction: column;
+    }
+
+    #tomorrowCard, #dayThreeCard, #dayFourCard {
+        height: 100px;
+        width: 100%;
+        margin-bottom: 20px;
+        
+    }
+
+
+    
+
+
+  }
